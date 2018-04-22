@@ -1,0 +1,32 @@
+@import "../variables"
+
+
+.bmn-list--wrapper
+  display: flex
+  padding-left: 0
+  justify-content: space-between
+  align-content: center
+  flex-wrap: wrap
+  li
+    list-style-type: none
+    border: 1px solid #cccccc
+    border-radius: 2px
+    margin-bottom: 10px
+    &:not(.active):hover
+      background-color: $hover_bg_c
+    a
+      padding: 10px 25px
+      display: block
+      color: $text_color
+      text-decoration: none
+
+    &.active
+      &:hover
+        background-color: $main_color
+      background-color: $main_color
+      a
+        color: $text_active_c
+.bmn-table-actions
+  a
+    padding-left: $small_padding
+    color: $main_color_light
