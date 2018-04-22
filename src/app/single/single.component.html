@@ -1,0 +1,37 @@
+<div class="container">
+    <br>
+    <h5>Name of the Currency</h5>
+    <div class="row">
+
+        <div class="col-md-12">
+            <canvas appChart [labels]="['blue', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']"
+                    [values]="[12, 19, 3, 5, 2, 3]"></canvas>
+        </div>
+    </div>
+
+
+</div>
+<br>
+<div class="container">
+
+    <h5>Sums</h5>
+
+    <table class="table table-hover table-responsive-md">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Time</th>
+            <th scope="col">Quotation</th>
+            <th scope="col">Dynamic</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let i of [0,1,2,3]">
+            <th>{{i}}</th>
+            <td>22 of January</td>
+            <td>1.333</td>
+            <td>-0.007</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

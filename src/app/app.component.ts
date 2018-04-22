@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import * as chartjs from 'chart.js';
+
 
 @Component({
   selector: 'app-root',
@@ -7,11 +7,10 @@ import * as chartjs from 'chart.js';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements  OnInit {
-  title = 'app';
-  lineChart: chartjs;
+
 
   ngOnInit(): void {
-    console.dir(chartjs);
+
   }
 
 }
