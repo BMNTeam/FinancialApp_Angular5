@@ -12,6 +12,8 @@ import {RouterModule} from '@angular/router';
 import { SingleComponent } from './single/single.component';
 import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
+import { HttpClient, HttpHandler} from '@angular/common/http';
+import {ConnectionService} from './connection.service';
 
 
 @NgModule({
@@ -29,7 +31,7 @@ import { ListComponent } from './list/list.component';
         BrowserModule,
         RouterModule.forRoot(AppRoutes)
     ],
-    providers: [],
+    providers: [HttpClient, ConnectionService, HttpHandler],
     bootstrap: [AppComponent]
 })
 export class AppModule {
