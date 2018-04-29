@@ -12,7 +12,7 @@ import {RouterModule} from '@angular/router';
 import { SingleComponent } from './single/single.component';
 import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
-import { HttpClient, HttpHandler} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import {ConnectionService} from './connection.service';
 
 
@@ -29,9 +29,10 @@ import {ConnectionService} from './connection.service';
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         RouterModule.forRoot(AppRoutes)
     ],
-    providers: [HttpClient, ConnectionService, HttpHandler],
+    providers: [ConnectionService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
