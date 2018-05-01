@@ -15,17 +15,19 @@ interface Quatations {
 export class ConnectionService implements OnInit {
     url = 'https://www.alphavantage.co/';
     currencies: string[];
-    quotations: any = [];
+    quotations: Quatations[] = [];
 
     constructor(private http: HttpClient) {
     }
 
     ngOnInit() {
         this.currencies = this.getCurrenciesList();
-        this.getCurrencies('EURUSD');
+        this.currencies.forEach( i => {
+            this.getQuotations(i);
+        });
     }
 
-    public getCurrencies(symbol: string) {
+    public getQuotations(symbol: string) {
         const params: { [param: string]: string } = {
             function: 'TIME_SERIES_INTRADAY',
             symbol: symbol,
@@ -34,16 +36,16 @@ export class ConnectionService implements OnInit {
             apikey: '7FC8OSCVV6HT2FEY'
         };
 
-        const query = this.getQuery(params);
-        const test = this.url + 'query?' + query;
+        const query = this.getQuotationsQuery(params);
+
         return this.http.get(this.url + 'query?' + query).subscribe((res) => {
             // TODO: check out why function breaks in response
-            // this.quotations = this.mapRespone(res);
-            this.quotations = 0;
+            this.quotations.push(this.mapResponse(res));
+            console.dir(this.quotations);
         });
     }
 
-    private mapRespone(res: any): Quatations {
+    private mapResponse(res: any): Quatations {
         res = JSON.parse(JSON.stringify(res));
         const quotations: Quatations = {
             name: res['Meta Data']['2. Symbol'],
@@ -65,7 +67,7 @@ export class ConnectionService implements OnInit {
         return quotations;
     }
 
-    private getQuery(params: { [param: string]: string }): string {
+    private getQuotationsQuery(params: { [param: string]: string }): string {
         let query = '';
         for (const key in params) {
             if (params.hasOwnProperty(key)) {
