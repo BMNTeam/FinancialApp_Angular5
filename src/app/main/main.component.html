@@ -4,12 +4,8 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="S bmn-list--wrapper">
-                <li class="active"><a href="#">USD/EUR</a></li>
-                <li><a href="#">USD/RUB</a></li>
-                <li><a href="#">USD/FRA</a></li>
-                <li><a href="#">USD/ORT</a></li>
-                <li><a href="#">USD/ORT</a></li>
-                <li><a href="#">USD/ORT</a></li>
+                <li *ngFor="let quotation of quotations"><a href="#"> {{ quotation.name}}</a></li>
+
             </ul>
         </div>
 
