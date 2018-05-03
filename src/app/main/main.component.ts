@@ -12,9 +12,15 @@ import {Quotations, Quotation, ConnectionService} from '../connection.service';
 export class MainComponent implements OnInit {
 
   quotations: Quotations[] = [];
+  current: Quotations = {name: '', quotations: [{value: 123123, time: new Date() }] };
 
   constructor(private _connectionSrv: ConnectionService) {
       this.quotations = this._connectionSrv.quotations;
+  }
+
+  // TODO: find better way to work with ASYNC data
+  select (name: string) {
+      this.current = this.quotations.filter( i => i.name === name)[0];
   }
 
   ngOnInit() {
