@@ -13,8 +13,8 @@ export class LocalData  {
     }
 
     static initInLocalStorage(): void {
-        const quatations = { quotations: [] } as Quotations[];
-        localStorage.setItem(this._quotations, JSON.stringify(quatations));
+        const quotations = { quotations: [] };
+        localStorage.setItem(this._quotations, JSON.stringify(quotations));
     }
 
     static setToLocalStorage(item: Quotations ) {

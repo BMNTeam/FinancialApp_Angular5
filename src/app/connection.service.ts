@@ -1,6 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LocalData} from './helpers/LocalData';
+import {environment} from '../environments/environment';
 
 export interface Quotation {
     time: Date;
@@ -37,7 +38,7 @@ export class ConnectionService implements OnInit {
             symbol: symbol,
             interval: '15min',
             outputsize: 'full',
-            apikey: '7FC8OSCVV6HT2FEY'
+            apikey: environment.apiKey
         };
 
         const query = this.getQuotationsQuery(params);
