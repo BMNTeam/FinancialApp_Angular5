@@ -12,7 +12,7 @@ import {Quotations, Quotation, ConnectionService} from '../connection.service';
 export class MainComponent implements OnInit {
 
   quotations: Quotations[] = [];
-  current: Quotations = {name: '', quotations: [{value: 123123, time: new Date() }] };
+  current: Quotations;
 
   constructor(private _connectionSrv: ConnectionService) {
       this.quotations = this._connectionSrv.quotations;
@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    if (this.quotations[0]) {this.select(this.quotations[1].name); }
   }
 
 }

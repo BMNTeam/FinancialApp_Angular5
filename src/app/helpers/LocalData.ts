@@ -1,4 +1,5 @@
 import {Quotations} from '../connection.service';
+import * as moment from 'moment';
 
 export class LocalData  {
     static _quotations = 'quotations';
@@ -28,11 +29,27 @@ export class LocalData  {
         }
 
         localStorage.setItem(this._quotations, JSON.stringify(data));
-        localStorage.setItem('lastUpdate', new Date().toDateString());
+        localStorage.setItem('lastUpdate',  Date.now().toString());
     }
 
     static isExpired (): boolean {
-        return !!localStorage.getItem('lastUpdate');
+        const lastUpdate = localStorage.getItem('lastUpdate');
+
+        if ( lastUpdate) {
+            const now = moment(Date.now());
+            const previous =  moment(lastUpdate);
+
+            // TODO: fix with momentJS
+            const diff = moment.duration(now.diff(previous)).asHours();
+            console.dir(now.hours());
+            console.dir(previous.toDate());
+
+
+            return ((now - previous) / 1000 * 60 * 60 * 10 < 10 );
+
+        } else {
+            return false;
+        }
     }
 
 }

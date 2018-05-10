@@ -9,16 +9,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let i of [0,1,2,3]">
+    <tr *ngFor="let q of quotations; let i = index">
         <th>{{i}}</th>
-        <td>22 of January</td>
-        <td>USD/EUR</td>
-        <td>1.333</td>
+        <td>{{q.name}}</td>
+        <td> {{q.quotations[q.quotations.length -1].value}}</td>
+        <td> {{getDynamic( q.quotations).dynamics}}</td>
         <td class="bmn-table-actions">
             <a href="#">
                 <i class="fas fa-trash"></i>
             </a>
-            <a routerLink="/single/12" routerLinkActive="active">
+            <a routerLink="/single/{{q.name}}" routerLinkActive="active">
                 <i class="fas fa-arrow-alt-circle-right"></i>
             </a>
         </td>
