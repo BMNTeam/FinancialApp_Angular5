@@ -2,17 +2,16 @@
 <div class="container">
     <div class="col-md-12">
         <h5>Add new currency</h5>
-        <form>
+        <form #f="ngForm" (ngSubmit)="addQuotation(f.value.currency); f.reset();">
             <div class="row form-group">
                 <div class="col-md-6">
 
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select name="currency" ngModel id="inputState" class="form-control">
+                        <option *ngFor="let currency of currencies ">{{ currency }}</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-danger">Add</button>
+                    <button type="submit" [disabled]="f.pristine" class="btn btn-danger">Add</button>
                 </div>
             </div>
 
@@ -20,11 +19,11 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" *ngIf="quotations">
     <div class="col-md-12">
         <h5>Already exist</h5>
         <div>
-            <app-list></app-list>
+            <app-list [quotations]="quotations"></app-list>
         </div>
     </div>
 </div>

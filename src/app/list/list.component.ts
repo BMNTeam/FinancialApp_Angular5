@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Quotation, Quotations} from '../connection.service';
+import {ConnectionService, Quotation, Quotations} from '../connection.service';
+import {LocalData} from '../helpers/LocalData';
 
 @Component({
     selector: 'app-list',
@@ -10,7 +11,7 @@ export class ListComponent implements OnInit {
 
     @Input() quotations: Quotations[];
 
-    constructor() {
+    constructor( private connectionSrv: ConnectionService) {
     }
 
     ngOnInit() {
@@ -25,5 +26,12 @@ export class ListComponent implements OnInit {
         };
 
     }
+
+    public delete(name: string) {
+        LocalData.delete(name);
+        this.connectionSrv.ngOnInit();
+    }
+
+
 
 }

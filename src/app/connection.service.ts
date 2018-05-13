@@ -2,6 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LocalData} from './helpers/LocalData';
 import {environment} from '../environments/environment';
+import {Subject} from 'rxjs/index';
 
 export interface Quotation {
     time: Date;
@@ -21,18 +22,25 @@ export class ConnectionService implements OnInit {
     url = 'https://www.alphavantage.co/';
     currencies: string[];
     quotations: Quotations[] = [];
+    resolved: Subject<string> = new Subject<string>();
 
     constructor(private http: HttpClient) {
-        this.currencies = this.getCurrenciesList();
+
     }
 
     ngOnInit() {
+        this.currencies = this.getCurrenciesList();
+        this.getAllQuotations();
+    }
+
+    public getAllQuotations() {
+        this.quotations.length = 0;
         this.currencies.forEach(i => {
-            this.getQuotations(i);
+            this.getQuotation(i);
         });
     }
 
-    public getQuotations(symbol: string) {
+    public getQuotation(symbol: string) {
         const params: { [param: string]: string } = {
             function: 'TIME_SERIES_INTRADAY',
             symbol: symbol,
@@ -43,12 +51,17 @@ export class ConnectionService implements OnInit {
 
         const query = this.getQuotationsQuery(params);
 
-        if (LocalData.getFromLocalStorage(symbol) && LocalData.isExpired() ) {
-            this.quotations.push( LocalData.getFromLocalStorage(symbol) );
+        if (!LocalData.isInitialized()) { LocalData.init(); }
+
+        if (LocalData.exist(symbol) && LocalData.notExpired() ) {
+            this.quotations.push( LocalData.get(symbol) );
         } else {
             this.http.get(this.url + 'query?' + query).subscribe((res) => {
-                this.quotations.push(this.mapResponse(res));
-                LocalData.setToLocalStorage(this.mapResponse(res));
+                const mappedRes = this.mapResponse(res);
+
+                this.quotations.push(mappedRes);
+                LocalData.set(mappedRes);
+                this.resolved.next(mappedRes.name);
 
             });
         }
@@ -87,8 +100,10 @@ export class ConnectionService implements OnInit {
         return query.slice(0, query.lastIndexOf('&'));
     }
 
-    private getCurrenciesList(): string[] {
-        return ['EURUSD', 'EURGBP', 'CHFUSD', 'BTCUSD', 'AUDUSD', 'CADUSD'];
+    public getCurrenciesList(): string[] {
+        return (LocalData.getCurrenciesList())
+            ? LocalData.getCurrenciesList()
+            : ['EURUSD', 'EURGBP', 'CHFUSD', 'BTCUSD', 'AUDUSD', 'CADUSD'];
     }
 
 

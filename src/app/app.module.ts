@@ -14,6 +14,7 @@ import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
 import { HttpClientModule} from '@angular/common/http';
 import {ConnectionService} from './connection.service';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {ConnectionService} from './connection.service';
     imports: [
         BrowserModule,
         HttpClientModule,
+        FormsModule,
         RouterModule.forRoot(AppRoutes)
     ],
     providers: [ConnectionService],
