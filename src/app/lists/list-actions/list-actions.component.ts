@@ -1,11 +1,11 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {ConnectionService, Quotation, Quotations} from '../connection.service';
-import {LocalData} from '../helpers/LocalData';
+import {ConnectionService, Quotation, Quotations} from '../../connection.service';
+import {LocalData} from '../../helpers/LocalData';
 
 @Component({
     selector: 'app-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.sass']
+    templateUrl: './list-actions.component.html',
+    styleUrls: ['../list.component.sass']
 })
 export class ListComponent implements OnInit {
 

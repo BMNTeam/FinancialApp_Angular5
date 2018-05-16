@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectionService, Quotations} from '../connection.service';
-import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'app-add',

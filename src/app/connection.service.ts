@@ -17,8 +17,6 @@ export interface Quotations {
 @Injectable()
 export class ConnectionService implements OnInit {
 
-    private _lastUpdate: Date;
-
     url = 'https://www.alphavantage.co/';
     currencies: string[];
     quotations: Quotations[] = [];
