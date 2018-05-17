@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Input, OnChanges, OnInit} from '@angular/core';
 import * as Chart from 'chart.js';
-import {Quotation, Quotations} from '../../connection.service';
+import {Quotation} from '../../connection.service';
 
 @Directive({
     selector: '[appChart]'
@@ -9,6 +9,9 @@ export class ChartDirective implements OnChanges, OnInit {
     @Input() quotations: Quotation[];
     elem: HTMLCanvasElement;
     chart: Chart;
+
+
+    // TODO: check out performance on sorting
 
     private labels: string[];
     private values: number[];
@@ -20,9 +23,8 @@ export class ChartDirective implements OnChanges, OnInit {
 
     private getLabelsAndValues() {
 
-        this.quotations.sort( (a, b) =>  new Date(a.time).valueOf() - new Date(b.time).valueOf() ) ;
 
-        this.labels = this.quotations.map(i => new Date(i.time).toDateString());
+        this.labels = this.quotations.map(i => new Date(i.time).toLocaleDateString());
         this.values = this.quotations.map(i => i.value);
     }
 

@@ -1,11 +1,13 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LocalData} from './helpers/LocalData';
 import {environment} from '../environments/environment';
 import {Subject} from 'rxjs/index';
 
+import {LocalData} from './helpers/LocalData';
+import * as moment from 'moment';
+
 export interface Quotation {
-    time: Date;
+    time: string;
     value: number;
 }
 
@@ -77,12 +79,13 @@ export class ConnectionService implements OnInit {
             if (timeSeries.hasOwnProperty(key)) {
                 quotations.quotations.push(
                     {
-                        time: new Date(key),
+                        time: moment(key).toLocaleString(),
                         value: +timeSeries[key]['1. open']
                     }
                 );
             }
         }
+        quotations.quotations.sort( (a, b) => new Date(b.time).valueOf() - new Date(a.time).valueOf());
 
         return quotations;
     }

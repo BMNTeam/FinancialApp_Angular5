@@ -10,31 +10,30 @@ import * as moment from 'moment';
 export class ListDetailsComponent implements OnInit {
 
     @Input() quotations: Quotation[];
-    public metaData: {id: Date, time: string, dynamics: number}[];
+    public metaData: {id: string, time: string, dynamics: number}[];
 
     constructor() {
 
     }
 
-    private getFormattedTime(date: Date): string {
+    private getFormattedTime(date: string): string {
         return moment(date).format('Do of MMM HH:MM a').toString();
     }
 
-    time(time: Date): string {
+    time(time: string): string {
         return this.metaData.find(v => v.id === time).time;
     }
 
-    dynamics(time: Date): number {
+    dynamics(time: string): number {
         return this.metaData.find(v => v.id === time).dynamics;
     }
 
     private getDynamic(current: number, index: number): number {
-        return (this.quotations[index - 1]) ? Math.round((this.quotations[index - 1].value - current) * 100) / 100 : 0;
+        return (this.quotations[index - 1]) ? Math.round((this.quotations[index - 1].value - current) * 10000) / 10000 : 0;
     }
 
 
     ngOnInit() {
-        this.quotations.sort( (a, b) => new Date(b.time).valueOf() - new Date(a.time).valueOf());
         this.setMetadata();
 
     }
