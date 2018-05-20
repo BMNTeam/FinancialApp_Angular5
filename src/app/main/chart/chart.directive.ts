@@ -23,9 +23,12 @@ export class ChartDirective implements OnChanges, OnInit {
 
     private getLabelsAndValues() {
 
+        const proxy = this.quotations
+            .map(i => i) // Just make the copy of array
+            .sort((a, b) => new Date(a.time).valueOf() - new Date(b.time).valueOf());
 
-        this.labels = this.quotations.map(i => new Date(i.time).toLocaleDateString());
-        this.values = this.quotations.map(i => i.value);
+        this.labels = proxy.map(i => new Date(i.time).toLocaleDateString());
+        this.values = proxy.map(i => i.value);
     }
 
     ngOnInit() {
@@ -44,6 +47,9 @@ export class ChartDirective implements OnChanges, OnInit {
             type: 'line',
             options: {
                 responsive: true,
+                animation: { duration: 0 },
+                hover: { animationDuration: 0 },
+                responsiveAnimationDuration: 0,
                 legend: { display: false },
                 scales: {
                     yAxes: [{

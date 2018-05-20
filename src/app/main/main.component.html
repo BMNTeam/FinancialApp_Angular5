@@ -1,12 +1,13 @@
-<div class="container"  *ngIf="quotations.length > 2">
+<div class="container" *ngIf="quotations.length ">
     <br>
     <h5>Dynamic</h5>
     <div class="row">
         <div class="col-md-12">
             <ul class="S bmn-list--wrapper">
-                <li *ngFor="let quotation of quotations"
-                    [ngClass]="{'active': current.name === quotation.name}">
-                        <a (click)="select(quotation.name)"> {{ quotation.name}}</a></li>
+                <li
+                        *ngFor="let quotation of quotations"
+                        [ngClass]="{'active': current && current.name === quotation.name}">
+                    <a (click)="select(quotation.name)"> {{ quotation.name}}</a></li>
             </ul>
         </div>
 

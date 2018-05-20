@@ -30,6 +30,7 @@ export class AddComponent implements OnInit {
     }
 
     addQuotation(value: string) {
+        console.dir(this);
         this.connectionSrv.currencies.push(value);
         this.connectionSrv.getAllQuotations();
 

@@ -55,6 +55,7 @@ export class ConnectionService implements OnInit {
 
         if (LocalData.exist(symbol) && LocalData.notExpired() ) {
             this.quotations.push( LocalData.get(symbol) );
+            this.resolved.next(LocalData.get(symbol).name);
         } else {
             this.http.get(this.url + 'query?' + query).subscribe((res) => {
                 const mappedRes = this.mapResponse(res);
