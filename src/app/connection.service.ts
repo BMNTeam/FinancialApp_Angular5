@@ -25,11 +25,11 @@ export class ConnectionService implements OnInit {
     resolved: Subject<string> = new Subject<string>();
 
     constructor(private http: HttpClient) {
-
+        this.currencies = this.getCurrenciesList();
     }
 
     ngOnInit() {
-        this.currencies = this.getCurrenciesList();
+
         this.getAllQuotations();
     }
 

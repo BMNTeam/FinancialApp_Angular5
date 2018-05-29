@@ -2,7 +2,7 @@
 <div class="container">
     <div class="col-md-12">
         <h5>Add new currency</h5>
-        <form #f="ngForm" (ngSubmit)="addQuotation(f.value.currency); f.reset();">
+        <form #f="ngForm" (ngSubmit)="addQuotation(f?.value.currency); f.reset();">
             <div class="row form-group">
                 <div class="col-md-6">
 
