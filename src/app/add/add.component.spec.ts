@@ -1,12 +1,13 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {FormsModule} from '@angular/forms';
 import {ConnectionService, Quotations} from '../connection.service';
 
 import {AddComponent} from './add.component';
 import {ListComponent} from '../lists/list-actions/list-actions.component';
-import {Observable, Subject} from 'rxjs/index';
+import {Observable, of, Subject} from 'rxjs/index';
 import {RouterTestingModule} from '@angular/router/testing';
+import {async as _async} from 'rxjs/internal/scheduler/async';
 
 
 export class ConnectionMock {
@@ -38,7 +39,8 @@ export class ConnectionMock {
     }
 
     getAllQuotations(): Observable<Quotations[]> {
-        return Observable.create(this.currencies.map(i => this.getQuotation(i)));
+        // https://netbasal.com/testing-observables-in-angular-a2dbbfaf5329
+        return of(this.currencies.map(i => this.getQuotation(i)), _async);
     }
 
     getQuotation(symbol: string): Quotations {
@@ -90,17 +92,19 @@ fdescribe('AddComponent', () => {
         expect(component.currencies.length).toBeGreaterThan(0);
     });
 
-    it('should filter currencies', () => {
+    it('should filter currencies', fakeAsync(() => {
 
         const current = component.currencies.length;
         component.addQuotation('USDJPY');
 
+        // TODO: try this article
+        // https://netbasal.com/testing-observables-in-angular-a2dbbfaf5329
+         tick();
+         fixture.detectChanges();
         // TODO: find why connectionSrv.resolve doesn't trigger next event in component
+
         expect(component.currencies.length).toBeLessThan(current);
 
 
-
-
-
-    });
+    }));
 });
