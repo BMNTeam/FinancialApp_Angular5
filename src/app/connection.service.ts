@@ -24,7 +24,7 @@ export class ConnectionService implements OnInit {
     /*get currencies() {
         return new Observable(observer=>{
             observer.next(this._curencies);
-            observer.finish();
+            observer.complete();
         });
     }*/
     currencies: string[];
