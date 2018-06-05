@@ -20,6 +20,13 @@ export interface Quotations {
 export class ConnectionService implements OnInit {
 
     url = 'https://www.alphavantage.co/';
+    //private _currencies: string[];
+    /*get currencies() {
+        return new Observable(observer=>{
+            observer.next(this._curencies);
+            observer.finish();
+        });
+    }*/
     currencies: string[];
     quotations: Quotations[] = [];
     resolved: Subject<string> = new Subject<string>();
