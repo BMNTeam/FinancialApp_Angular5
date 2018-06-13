@@ -5,12 +5,22 @@ import {ConnectionService, Quotations} from '../connection.service';
 
 import {AddComponent} from './add.component';
 import {ListComponent} from '../lists/list-actions/list-actions.component';
-import {Observable, of, Subject} from 'rxjs/index';
+import {defer, Observable, of, Subject} from 'rxjs/index';
 import {RouterTestingModule} from '@angular/router/testing';
 import {async as _async} from 'rxjs/internal/scheduler/async';
 
+export function fakeAsyncResponse<T>(data: T) {
+    return defer(() => Promise.resolve(data));
+}
 
 export class ConnectionMock {
+    get currencies() {
+        return new Observable( observer => {
+            observer.next(this._currencies);
+            observer.complete();
+        });
+
+    }
     resolved: Subject<string> = new Subject<string>();
 
 
@@ -32,15 +42,15 @@ export class ConnectionMock {
 
     ];
 
-    currencies: string[] = ['EURUSD'];
+    _currencies: string[] = ['EURUSD'];
 
     getCurrenciesList(): string[] {
-        return this.currencies;
+        return this._currencies;
     }
 
     getAllQuotations(): Observable<Quotations[]> {
         // https://netbasal.com/testing-observables-in-angular-a2dbbfaf5329
-        return of(this.currencies.map(i => this.getQuotation(i)), _async);
+        return of(this._currencies.map(i => this.getQuotation(i)), _async);
     }
 
     getQuotation(symbol: string): Quotations {
@@ -92,18 +102,17 @@ fdescribe('AddComponent', () => {
         expect(component.currencies.length).toBeGreaterThan(0);
     });
 
-    it('should filter currencies', fakeAsync(() => {
+    it('should filter currencies', async(async() => {
 
-        const current = component.currencies.length;
+
+        const defaultLength = component.currencies.length;
+        fixture.detectChanges();
+
         component.addQuotation('USDJPY');
 
-        // TODO: try this article
-        // https://netbasal.com/testing-observables-in-angular-a2dbbfaf5329
-         tick();
-         fixture.detectChanges();
-        // TODO: find why connectionSrv.resolve doesn't trigger next event in component
+        await component.connectionSrv.resolved.toPromise();
 
-        expect(component.currencies.length).toBeLessThan(current);
+        expect(component.currencies.length).toBeLessThan(defaultLength);
 
 
     }));

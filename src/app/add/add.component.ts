@@ -8,19 +8,23 @@ import {ConnectionService, Quotations} from '../connection.service';
 })
 export class AddComponent implements OnInit {
 
+    private _currencies: string[];
     public quotations: Quotations[];
     public currencies: string[];
 
-    constructor(private connectionSrv: ConnectionService) {
+    constructor(public connectionSrv: ConnectionService) {
+        this.connectionSrv.currencies.subscribe(c =>
+            this._currencies = c);
         this.quotations = connectionSrv.quotations;
     }
 
     ngOnInit() {
         this.currencies = this.getNewCurrencies();
+
     }
 
     private getNewCurrencies(): string[] {
-        const exists = this.connectionSrv.getCurrenciesList();
+        const exists = this._currencies;
         const currencies = ['USDJPY', 'USDRUB', 'USDINR', 'USDSEK', 'USDTHB', 'USDTRY'];
 
         return currencies
@@ -30,7 +34,7 @@ export class AddComponent implements OnInit {
     }
 
     addQuotation(value: string) {
-        this.connectionSrv.currencies.push(value);
+        this.connectionSrv.currencies.subscribe(c => this.currencies === c);
         this.connectionSrv.getAllQuotations();
 
         this.connectionSrv.resolved.subscribe(
