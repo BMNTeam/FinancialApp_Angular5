@@ -28,8 +28,8 @@ export class AddComponent implements OnInit {
         const currencies = ['USDJPY', 'USDRUB', 'USDINR', 'USDSEK', 'USDTHB', 'USDTRY'];
 
         return currencies
-            .map( i => (exists.indexOf(i) === -1 ) ? i : null)
-            .filter(i => i) ;
+            .map( i => (exists.indexOf(i) === -1 ) ? i : null);
+            // .filter(i => i) ; // why am I need this?
 
     }
 

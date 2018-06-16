@@ -37,7 +37,6 @@ export class ListDetailsComponent implements OnInit {
         this.setMetadata();
 
     }
-    // TODO: check out why dynamics in AUDUSD is 0 everywhere
     private  setMetadata() {
         this.metaData = this.quotations.map( (item, index) => (
             {

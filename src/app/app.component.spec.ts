@@ -4,6 +4,10 @@ import {NavComponent} from './nav/nav.component';
 import {FooterComponent} from './footer/footer.component';
 import {MainComponent} from './main/main.component';
 import {ChartDirective} from './main/chart/chart.directive';
+import {RouterTestingModule} from '@angular/router/testing';
+import {ListComponent} from './lists/list-actions/list-actions.component';
+import {ConnectionService} from './connection.service';
+import {ConnectionMock} from './connection.service.spec';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -13,9 +17,19 @@ describe('AppComponent', () => {
                 NavComponent,
                 FooterComponent,
                 MainComponent,
-                ChartDirective
+                ChartDirective,
+                ListComponent
             ],
+            imports: [RouterTestingModule],
+            providers: [{provide: ConnectionService, use: ConnectionMock}]
+        }).overrideComponent(NavComponent, {
+            set: {
+                providers: [
+                    {provide: ConnectionService, useClass: ConnectionMock}
+                ]
+            }
         }).compileComponents();
+
     }));
     it('should create the app', async(() => {
         const fixture = TestBed.createComponent(AppComponent);
