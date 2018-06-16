@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ListComponent} from './list-actions.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ConnectionService} from '../../connection.service';
-import {ConnectionMock} from '../../connection.service.spec';
+import {ConnectionMock, quotations} from '../../connection.service.spec';
 
 describe('ListActionsComponent', () => {
     let component: ListComponent;
@@ -28,5 +28,11 @@ describe('ListActionsComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should calculate dynamics', () => {
+        const {dynamics, isIncreased} = component.getDynamic(quotations[0].quotations);
+        expect(dynamics).toBeDefined();
+        expect(isIncreased).toBeDefined();
     });
 });

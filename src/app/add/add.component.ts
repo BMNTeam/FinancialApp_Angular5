@@ -13,8 +13,6 @@ export class AddComponent implements OnInit {
     public currencies: string[];
 
     constructor(public connectionSrv: ConnectionService) {
-        this.connectionSrv.currencies.subscribe(c =>
-            this._currencies = c);
         this.quotations = connectionSrv.quotations;
     }
 
@@ -24,17 +22,17 @@ export class AddComponent implements OnInit {
     }
 
     private getNewCurrencies(): string[] {
-        const exists = this._currencies;
+        const exists = this.connectionSrv.getCurrenciesList();
         const currencies = ['USDJPY', 'USDRUB', 'USDINR', 'USDSEK', 'USDTHB', 'USDTRY'];
 
         return currencies
-            .map( i => (exists.indexOf(i) === -1 ) ? i : null);
-            // .filter(i => i) ; // why am I need this?
+            .map( i => (exists.indexOf(i) === -1 ) ? i : null)
+            .filter(i => i) ; // Update view or remove the null
 
     }
 
     addQuotation(value: string) {
-        this.connectionSrv.currencies.subscribe(c => this.currencies === c);
+        this.connectionSrv.currencies.push(value);
         this.connectionSrv.getAllQuotations();
 
         this.connectionSrv.resolved.subscribe(

@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment';
-import {defer, Observable, Subject} from 'rxjs/index';
+import {Observable, Subject} from 'rxjs/index';
 
 import {LocalData} from './helpers/LocalData';
 import * as moment from 'moment';
@@ -20,30 +20,25 @@ export interface Quotations {
 export class ConnectionService implements OnInit {
 
     url = 'https://www.alphavantage.co/';
-    private _currencies: string[];
 
+    currencies: string[] = [];
 
-    get currencies() {
-        return new Observable<string[]>( observer => {
-            observer.next(this._currencies);
-            observer.complete();
-        });
-    }
 
     quotations: Quotations[] = [];
     resolved: Subject<string> = new Subject<string>();
 
     constructor(private http: HttpClient) {
-        this._currencies = this.getCurrenciesList();
     }
 
     ngOnInit() {
+        this.currencies = this.getCurrenciesList();
         this.getAllQuotations();
     }
 
     public getAllQuotations() {
         this.quotations.length = 0;
-        this._currencies.forEach(i => {
+        this.currencies;
+        this.currencies.forEach(i => {
             this.getQuotation(i);
         });
     }

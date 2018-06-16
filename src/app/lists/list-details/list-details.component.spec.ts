@@ -34,4 +34,8 @@ describe('ListDetailsComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should set metadata when init', () => {
+        expect(component.metaData.length).toBeGreaterThan(0);
+    });
 });

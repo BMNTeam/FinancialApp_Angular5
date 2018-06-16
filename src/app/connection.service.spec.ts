@@ -1,10 +1,7 @@
 import {TestBed, inject} from '@angular/core/testing';
 
 import {ConnectionService, Quotations} from './connection.service';
-import {async as _async} from 'rxjs/internal/scheduler/async';
-import {Observable, of, Subject} from 'rxjs/index';
-import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Subject} from 'rxjs/index';
 import {HttpClientModule} from '@angular/common/http';
 
 const time = Date.now().toString();
@@ -29,26 +26,18 @@ export const quotations: Quotations[] = [
 
 export class ConnectionMock {
 
-    get currencies() {
-        return new Observable(observer => {
-            observer.next(this._currencies);
-            observer.complete();
-        });
-
-    }
-
+    currencies: string[] = ['EURUSD'];
     resolved: Subject<string> = new Subject<string>();
 
     private quotations: Quotations[] = quotations;
 
-    _currencies: string[] = ['EURUSD'];
 
     getCurrenciesList(): string[] {
-        return this._currencies;
+        return this.currencies;
     }
 
-    getAllQuotations(): Observable<Quotations[]> {
-        return of(this._currencies.map(i => this.getQuotation(i)), _async);
+    getAllQuotations(): Quotations[] {
+        return this.currencies.map(i => this.getQuotation(i));
     }
 
     getQuotation(symbol: string): Quotations {

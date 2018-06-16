@@ -56,8 +56,6 @@ export class LocalData {
 
     }
 
-
-
     static save(quotations: Quotations[]) {
         localStorage.setItem(this._quotations, JSON.stringify(quotations));
     }
