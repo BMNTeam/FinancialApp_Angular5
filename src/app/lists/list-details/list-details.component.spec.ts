@@ -38,4 +38,12 @@ describe('ListDetailsComponent', () => {
     it('should set metadata when init', () => {
         expect(Object.keys(component.metaData).length).toBeGreaterThan(0);
     });
+
+    it('should receive formatted time', () => {
+        expect(component.time(quotations[0].quotations[0].time)).toContain('th'); // 7th of June for example
+    });
+
+    it('should receive dynamics', () => {
+        expect(component.dynamic(quotations[0].quotations[1].time)).toBeGreaterThan(0); // Just 0 is the same value
+    });
 });

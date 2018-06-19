@@ -12,13 +12,10 @@ export class ListDetailsComponent implements OnInit {
     @Input() quotations: Quotation[];
     public metaData: {[key: string]: {time: string; dynamics: number; }};
 
-    constructor() {
+    constructor() {}
 
-    }
-
-    private getFormattedTime(date: string): string {
-        const time = moment(date).format('Do of MMM HH:MM a').toString();
-        return moment(date).format('Do of MMM HH:MM a').toString();
+    ngOnInit() {
+        this.setMetadata();
     }
 
     time(time: string): string {
@@ -29,15 +26,14 @@ export class ListDetailsComponent implements OnInit {
         return this.metaData[time] && this.metaData[time].dynamics;
     }
 
+    private getFormattedTime(date: string): string {
+        return moment(date).format('Do of MMM HH:MM a').toString();
+    }
+
     private getDynamic(current: number, index: number): number {
         return (this.quotations[index - 1]) ? Math.round((this.quotations[index - 1].value - current) * 10000) / 10000 : 0;
     }
 
-
-    ngOnInit() {
-        this.setMetadata();
-
-    }
     private  setMetadata() {
         this.metaData = this.quotations.reduce( (result, item, index) =>  {
 
@@ -47,7 +43,6 @@ export class ListDetailsComponent implements OnInit {
                 };
                 return result;
                 // To improve performance
-
 
                 // id: item.time,
                 // time: this.getFormattedTime(item.time),

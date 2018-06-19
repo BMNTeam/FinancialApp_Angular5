@@ -11,17 +11,15 @@ export class ChartDirective implements OnChanges, OnInit {
     chart: Chart;
 
 
-    // TODO: check out performance on sorting
 
-    private labels: string[];
-    private values: number[];
+    labels: string[];
+    values: number[];
 
     constructor(el: ElementRef) {
         this.elem = el.nativeElement;
-
     }
 
-    private getLabelsAndValues() {
+    private setLabelsAndValues() {
 
         const proxy = this.quotations
             .map(i => i) // Just make the copy of array
@@ -37,7 +35,7 @@ export class ChartDirective implements OnChanges, OnInit {
     }
 
     ngOnChanges() {
-        if (this.quotations && this.chart) {this.getLabelsAndValues(); } else {return; }
+        if (this.quotations && this.chart) {this.setLabelsAndValues(); } else {return; }
 
         this.updateChart();
     }
@@ -73,6 +71,7 @@ export class ChartDirective implements OnChanges, OnInit {
             }];
         this.chart.data.labels = this.labels;
 
+        // TODO find why it leads to settings options of undefined error
         this.chart.update();
     }
 
