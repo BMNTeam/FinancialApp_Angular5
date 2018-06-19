@@ -9,16 +9,16 @@ const time = Date.now().toString();
 export const quotations: Quotations[] = [
     {
         name: 'EURUSD', quotations: [
-            {time: time, value: 1.42},
-            {time: time, value: 1.33},
-            {time: time, value: 1.20},
+            {time: time - 1, value: 1.42},
+            {time: time - 2, value: 1.33},
+            {time: time - 3, value: 1.20},
         ]
     },
     {
         name: 'USDJPY', quotations: [
-            {time: time, value: 1.42},
-            {time: time, value: 1.33},
-            {time: time, value: 1.20},
+            {time: time - 1, value: 1.42},
+            {time: time - 2, value: 1.33},
+            {time: time - 3, value: 1.20},
         ]
     },
 

@@ -10,22 +10,23 @@ import * as moment from 'moment';
 export class ListDetailsComponent implements OnInit {
 
     @Input() quotations: Quotation[];
-    public metaData: {id: string, time: string, dynamics: number}[];
+    public metaData: {[key: string]: {time: string; dynamics: number; }};
 
     constructor() {
 
     }
 
     private getFormattedTime(date: string): string {
+        const time = moment(date).format('Do of MMM HH:MM a').toString();
         return moment(date).format('Do of MMM HH:MM a').toString();
     }
 
     time(time: string): string {
-        return this.metaData.find(v => v.id === time).time;
+        return this.metaData[time] && this.metaData[time].time;
     }
 
-    dynamics(time: string): number {
-        return this.metaData.find(v => v.id === time).dynamics;
+    dynamic(time: string): number {
+        return this.metaData[time] && this.metaData[time].dynamics;
     }
 
     private getDynamic(current: number, index: number): number {
@@ -38,13 +39,21 @@ export class ListDetailsComponent implements OnInit {
 
     }
     private  setMetadata() {
-        this.metaData = this.quotations.map( (item, index) => (
-            {
-                id: item.time,
-                time: this.getFormattedTime(item.time),
+        this.metaData = this.quotations.reduce( (result, item, index) =>  {
 
-                dynamics: this.getDynamic(item.value, index)
-            }));
+                result[item.time] = {
+                    time: this.getFormattedTime(item.time),
+                    dynamics: this.getDynamic(item.value, index)
+                };
+                return result;
+                // To improve performance
+
+
+                // id: item.time,
+                // time: this.getFormattedTime(item.time),
+                //
+                // dynamics: this.getDynamic(item.value, index)
+            }, {});
     }
 
 

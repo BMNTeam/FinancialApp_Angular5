@@ -36,6 +36,6 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should set metadata when init', () => {
-        expect(component.metaData.length).toBeGreaterThan(0);
+        expect(Object.keys(component.metaData).length).toBeGreaterThan(0);
     });
 });
