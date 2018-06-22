@@ -40,7 +40,7 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should receive formatted time', () => {
-        expect(component.time(quotations[0].quotations[0].time)).toContain('th'); // 7th of June for example
+        expect(component.time(quotations[0].quotations[0].time)).toContain('of'); // 22nd of June for example
     });
 
     it('should receive dynamics', () => {

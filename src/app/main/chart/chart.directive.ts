@@ -10,8 +10,6 @@ export class ChartDirective implements OnChanges, OnInit {
     elem: HTMLCanvasElement;
     chart: Chart;
 
-
-
     labels: string[];
     values: number[];
 
@@ -40,7 +38,7 @@ export class ChartDirective implements OnChanges, OnInit {
         this.updateChart();
     }
 
-    private initChart() {
+    initChart() {
         this.chart = new Chart(this.elem, {
             type: 'line',
             options: {
@@ -71,7 +69,6 @@ export class ChartDirective implements OnChanges, OnInit {
             }];
         this.chart.data.labels = this.labels;
 
-        // TODO find why it leads to settings options of undefined error
         this.chart.update();
     }
 

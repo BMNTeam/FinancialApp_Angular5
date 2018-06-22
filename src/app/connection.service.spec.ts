@@ -4,21 +4,21 @@ import {ConnectionService, Quotations} from './connection.service';
 import {Subject} from 'rxjs/index';
 import {HttpClientModule} from '@angular/common/http';
 
-const time = Date.now().toString();
+const time = Date.now();
 
 export const quotations: Quotations[] = [
     {
         name: 'EURUSD', quotations: [
-            {time: time - 1, value: 1.42},
-            {time: time - 2, value: 1.33},
-            {time: time - 3, value: 1.20},
+            {time: (+time - 1).toString(), value: 1.42},
+            {time: (+time - 2).toString(), value: 1.33},
+            {time: (+time - 3).toString(), value: 1.20},
         ]
     },
     {
         name: 'USDJPY', quotations: [
-            {time: time - 1, value: 1.42},
-            {time: time - 2, value: 1.33},
-            {time: time - 3, value: 1.20},
+            {time: (+time - 1).toString(), value: 1.42},
+            {time: (+time - 2).toString(), value: 1.33},
+            {time: (+time - 3).toString(), value: 1.20},
         ]
     },
 

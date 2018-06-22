@@ -27,7 +27,7 @@ export class ListDetailsComponent implements OnInit {
     }
 
     private getFormattedTime(date: string): string {
-        return moment(date).format('Do of MMM HH:MM a').toString();
+        return moment(+date).format('Do of MMM HH:MM a').toString();
     }
 
     private getDynamic(current: number, index: number): number {

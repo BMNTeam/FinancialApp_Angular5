@@ -29,4 +29,13 @@ describe('NavComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should receive currencies from service and set to its currencies property',  async(async()  => {
+        expect(component.currencies).toBeUndefined();
+
+        component.ngOnInit();
+        fixture.detectChanges();
+        await component.connectionSrv.resolved.toPromise();
+        expect(component.currencies.length).toBeGreaterThan(0);
+    }));
 });

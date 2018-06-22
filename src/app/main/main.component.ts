@@ -17,8 +17,6 @@ export class MainComponent implements OnInit {
     constructor(private connectionSrv: ConnectionService) {
         this.quotations = this.connectionSrv.quotations;
         if (this.quotations.length) {this.select(this.quotations[0].name); }
-
-
     }
 
     select(name: string) {

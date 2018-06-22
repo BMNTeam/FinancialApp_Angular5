@@ -1,4 +1,4 @@
-import {async, ComponentFixture, flush, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SingleComponent} from './single.component';
 import {ChartDirective} from '../main/chart/chart.directive';
@@ -32,4 +32,13 @@ describe('SingleComponent', () => {
 
         expect(component).toBeTruthy();
     });
+
+    it('should receive selected currency from route', async(async()  => {
+        expect(component.selected).toBeUndefined();
+
+        await component.router.params.toPromise();
+
+        expect(component.selected).toBeDefined();
+        // TODO: read about async in assertion, what the difference
+    }));
 });

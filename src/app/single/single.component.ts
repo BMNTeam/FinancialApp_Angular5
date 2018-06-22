@@ -11,7 +11,7 @@ export class SingleComponent implements OnInit {
     quotations: Quotations;
     selected: string;
 
-    constructor(private router: ActivatedRoute, private _connectionSrv: ConnectionService ) {
+    constructor(public router: ActivatedRoute, private _connectionSrv: ConnectionService ) {
     }
 
     ngOnInit() {
