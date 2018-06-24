@@ -8,10 +8,10 @@ import {ConnectionService} from './connection.service';
     styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-    constructor(private connection: ConnectionService) {}
+    constructor(public connectionSrv: ConnectionService) {}
 
     ngOnInit(): void {
-        this.connection.ngOnInit();
+        this.connectionSrv.ngOnInit();
     }
 
 }

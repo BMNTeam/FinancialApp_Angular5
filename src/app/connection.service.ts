@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment';
-import {Observable, Subject} from 'rxjs/index';
+import {Subject} from 'rxjs/index';
 
 import {LocalData} from './helpers/LocalData';
 import * as moment from 'moment';
@@ -35,15 +35,14 @@ export class ConnectionService implements OnInit {
         this.getAllQuotations();
     }
 
-    public getAllQuotations() {
+    getAllQuotations() {
         this.quotations.length = 0;
-        this.currencies;
         this.currencies.forEach(i => {
             this.getQuotation(i);
         });
     }
 
-    public getQuotation(symbol: string) {
+    getQuotation(symbol: string) {
         const params: { [param: string]: string } = {
             function: 'TIME_SERIES_INTRADAY',
             symbol: symbol,
@@ -71,7 +70,7 @@ export class ConnectionService implements OnInit {
         }
     }
 
-    private mapResponse(res: any): Quotations {
+    mapResponse(res: any): Quotations {
         res = JSON.parse(JSON.stringify(res));
         const quotations: Quotations = {
             name: res['Meta Data']['2. Symbol'],
@@ -94,7 +93,7 @@ export class ConnectionService implements OnInit {
         return quotations;
     }
 
-    private getQuotationsQuery(params: { [param: string]: string }): string {
+    getQuotationsQuery(params: { [param: string]: string }): string {
         let query = '';
         for (const key in params) {
             if (params.hasOwnProperty(key)) {
@@ -105,7 +104,7 @@ export class ConnectionService implements OnInit {
         return query.slice(0, query.lastIndexOf('&'));
     }
 
-    public getCurrenciesList(): string[] {
+    getCurrenciesList(): string[] {
         return (LocalData.getCurrenciesList())
             ? LocalData.getCurrenciesList()
             : ['EURUSD', 'EURGBP', 'CHFUSD', 'BTCUSD', 'AUDUSD', 'CADUSD'];

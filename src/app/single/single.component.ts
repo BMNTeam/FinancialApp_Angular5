@@ -11,13 +11,13 @@ export class SingleComponent implements OnInit {
     quotations: Quotations;
     selected: string;
 
-    constructor(public router: ActivatedRoute, private _connectionSrv: ConnectionService ) {
+    constructor(public router: ActivatedRoute, private connectionSrv: ConnectionService ) {
     }
 
     ngOnInit() {
         this.router.params.subscribe( v  => {
             this.selected = v.id;
-            this.quotations = this._connectionSrv.quotations.filter( i => i.name === v.id)[0];
+            this.quotations = this.connectionSrv.quotations.filter( i => i.name === v.id)[0];
 
         });
     }

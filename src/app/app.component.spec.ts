@@ -1,4 +1,4 @@
-import {TestBed, async} from '@angular/core/testing';
+import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
 import {FooterComponent} from './footer/footer.component';
@@ -10,6 +10,8 @@ import {ConnectionService} from './connection.service';
 import {ConnectionMock} from './connection.service.spec';
 
 describe('AppComponent', () => {
+    let app: AppComponent;
+    let fixture: ComponentFixture<AppComponent>;
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -21,19 +23,25 @@ describe('AppComponent', () => {
                 ListComponent
             ],
             imports: [RouterTestingModule],
-            providers: [{provide: ConnectionService, use: ConnectionMock}]
-        }).overrideComponent(NavComponent, {
-            set: {
-                providers: [
-                    {provide: ConnectionService, useClass: ConnectionMock}
-                ]
-            }
+            providers: [{provide: ConnectionService, useClass: ConnectionMock}]
         }).compileComponents();
 
     }));
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+    })
     it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
+
         expect(app).toBeTruthy();
     }));
+
+    it('should init connection service', () => {
+        spyOn(app.connectionSrv, 'ngOnInit');
+
+        app.ngOnInit();
+
+        expect(app.connectionSrv.ngOnInit).toHaveBeenCalled();
+    });
 });

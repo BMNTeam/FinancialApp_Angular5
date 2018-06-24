@@ -41,4 +41,12 @@ describe('SingleComponent', () => {
         expect(component.selected).toBeDefined();
         // TODO: read about async in assertion, what the difference
     }));
+
+    it('should set quotation from service', async( async() => {
+        expect(component.quotations).toBeUndefined();
+
+        await component.router.params.toPromise();
+
+        expect(component.quotations).toBeDefined();
+    }));
 });
